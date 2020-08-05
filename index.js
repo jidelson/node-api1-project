@@ -54,9 +54,11 @@ server.delete('/api/users/:id', (req, res) => {
 
     const deleted = users.find((u) => u.id !== id)
     
-    if(!deleted){
+    if(!deleted.id){
         res.status(404).json({ message: "The user with the specified ID does not exist." })
-    } 
+    } else if (!deleted) {
+        res.status(500).json({ errorMessage: "The user could not be removed" })
+    }
     
     else {
         try{
@@ -64,7 +66,7 @@ server.delete('/api/users/:id', (req, res) => {
             res.status(200).end();
         }
         catch{
-            res.status(500).json({errorMessage: "The user could not be removed"})
+            res.status(500).json( {errorMessage: "The user could not be removed"} )
         }
     }
 
@@ -84,36 +86,12 @@ server.put("/api/users/:id", (req, res) => {
     else if(!editUser.name || !editUser.bio){
         res.status(400).json({ errorMessage: "Please provide name and bio for the user." })
     }
-    else if(){
 
-    }
     else{
         users.push(user)
         res.status(200).json(user)
     }
 })
-
-
-
-
-
-
-
-// // add an account
-// server.post("/accounts", (req, res) => {
-//     const account = req.body;
-
-//     account.id = shortid.generate();
-
-//     accounts.push(account);
-
-//     res.status(201).json(accounts);
-// })
-
-// server.get('/accounts', (req, res) => {
-    
-//     res.status(200).json(accounts);
-// });
 
 
 
