@@ -50,24 +50,26 @@ server.get('/users/:id', (req, res) => {
 
 // REMOVE A USER
 server.delete('/api/users/:id', (req, res) => {
-    // try{
-    //   const deletedUser = users.filter( u => u.id === req.params.id);
-    //   if(deletedUser.length > 0){
-    //     users = users.filter(u => u.id !== req.params.id)
-    //     res.status(200).json(deletedUser)
-    //   } else {
-    //     res.status(404).json({ message: "The user with the specified ID does not exist." })
-    //   }
-    // } catch{
-    //   res.status(500).json({ errorMessage: "The user could not be removed" })
-    // }
-    const newUsers = users.filter(user => user.id !== req.params.id);
-    if (users.length >= newUsers) {
-        res.status(402).json({ message: 'The user with the provided id does not exist' });
-    } else {
-        users = newUsers;
-        res.status(200).json(users);
+    try{
+      const deletedUser = users.filter( u => u.id === req.params.id);
+      if(deletedUser.length > 0){
+        users = users.filter(u => u.id !== req.params.id)
+        res.status(200).json(deletedUser)
+      } else {
+        res.status(404).json({ message: "The user with the specified ID does not exist." })
+      }
+    } catch{
+      res.status(500).json({ errorMessage: "The user could not be removed" })
     }
+    
+    // way 2 
+    // const newUsers = users.filter(user => user.id !== req.params.id);
+    // if (users.length >= newUsers) {
+    //     res.status(402).json({ message: 'The user with the provided id does not exist' });
+    // } else {
+    //     users = newUsers;
+    //     res.status(200).json(users);
+    // }
 })
 
 // PUT
